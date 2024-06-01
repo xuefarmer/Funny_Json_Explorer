@@ -5,6 +5,9 @@
 ![alt 属性文本](./UML.png "类图")
 这是使用mermaid进行编写得到的类图。具体mermaid代码见最下方附录。
 其中最上面的三个是关于建造者模式，中间三个类是关于组合模式，最下面的两层是关于工厂方法和抽象工厂。
+建造者模式中，Buider是Director的一一种属性即has-a的关系（尾部为空心菱形的实线箭头），JSONBuilder是Builder的一个具体实现，继承Builder。
+组合模式中 JSONLeaf 和 JSONObject 都继承 Component ，所以 是实线三角头。 同时 JSONObject中 包含 JSONComponent 列表。
+工厂模式中 JSONshowFactory 是基类抽象类。而TreeshowFactory 和RectangleshowFactory都是他的具体实现。而这两个工厂对应的产品就是Component中style的两种风格，之间是依赖关系，使用虚线箭头。
 
 
 
@@ -230,20 +233,21 @@ classDiagram
 Builder <.. JsonBuilder
 
 
-    JSONshowFactory <--TreeshowFactory
+    JSONshowFactory <|--TreeshowFactory
 
-    JSONshowFactory <-- RectangleshowFactory
+    JSONshowFactory <|-- RectangleshowFactory
     
     JSONObject*--Showstyle
 
-    Showstyle<..TreeShowstyle
+    Showstyle<|--TreeShowstyle
     
-    Showstyle<..RectangleShowstyle 
+    Showstyle<|--RectangleShowstyle 
     TreeShowstyle <.. TreeshowFactory
     RectangleShowstyle<.. RectangleshowFactory
     JSONLeaf*--Showstyle
     JsonBuilder o-- JSONComponent
-    JSONComponent <.. JSONLeaf
-    JSONComponent <.. JSONObject
+    JSONComponent <|-- JSONLeaf
+    JSONComponent <|-- JSONObject
+    JSONObject o--JSONComponent
 
 ```
